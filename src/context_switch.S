@@ -13,17 +13,36 @@
 .globl context_switch
 .align 16
 context_switch:
-  movq    %rsp, 0x0(%rdi)
-
+  /* Save old context */
+  movq    %rsp, 0x00(%rdi)
+  movq    %r15, 0x08(%rdi)
+  movq    %r14, 0x10(%rdi)
+  movq    %r13, 0x18(%rdi)
+  movq    %r12, 0x20(%rdi)
+  movq    %rbx, 0x28(%rdi)
+  movq    %rbp, 0x30(%rdi)
   stmxcsr 0x38(%rdi)
   fnstcw  0x3C(%rdi)
 
+  /* Load new context */
+  movq    0x00(%rsi), %rsp
+  movq    0x08(%rsi), %r15
+  movq    0x10(%rsi), %r14
+  movq    0x18(%rsi), %r13
+  movq    0x20(%rsi), %r12
+  movq    0x28(%rsi), %rbx
+  movq    0x30(%rsi), %rbp
   ldmxcsr 0x38(%rsi)
   fldcw   0x3C(%rsi)
-  /* FIXME: Phase 2
-   * Save and restore execution context.
-   * Part of the code is provided.
-   */
+
+
+  /* call pushes the address of the next instruction 
+  (i.e., the return address) onto the stack and then 
+  transfers control to the address specified by its operand.
+  ret pops the return address off the stack and jumps to it. */
+  ret 
+  
+
 
 /**
  * Initial function implicitly executed by a thread.

@@ -13,7 +13,9 @@
 namespace chloros {
 
 // This represents the execution context, specifically all callee-saved
-// registers. But where is the instruction pointer saved?
+// registers. But where is the instruction pointer saved? -> rsp
+// call pushes the address of the next instruction 
+// (i.e., the return address) onto the stack
 struct Context {
   uint64_t rsp;
   uint64_t r15;
