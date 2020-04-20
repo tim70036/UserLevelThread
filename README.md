@@ -3,7 +3,7 @@
 
 ## Usage
 A full program using this library might look like this:
-```
+```cpp
 #include "chloros.h"
 
 extern bool NotFinished(void*);
