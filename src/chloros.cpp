@@ -53,7 +53,7 @@ std::atomic<uint64_t> Thread::next_id;
 
 Thread::Thread(bool create_stack) {
   id = next_id++;
-  state = State::kReady;
+  state = State::kWaiting;
   stack = create_stack ? (uint8_t*)malloc(kStackSize) : nullptr;
 
   // These two initial values are provided for you.
