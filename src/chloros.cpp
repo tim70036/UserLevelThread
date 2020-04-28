@@ -161,6 +161,10 @@ bool Yield(bool only_ready) {
   current_thread = std::move(next_thread);
 
   ContextSwitch(old_context, new_context);
+
+  // Return from yield
+  GarbageCollect();
+
   return true;
 }
 
@@ -172,7 +176,14 @@ void Wait() {
 }
 
 void GarbageCollect() {
-  // FIXME: Phase 4
+  for (auto iter = thread_queue.begin() ; iter != thread_queue.end() ; ) {
+    if ((*iter)->state == Thread::State::kZombie) {
+      (*iter).reset();
+      iter = thread_queue.erase(iter);
+    } else {
+      iter++;
+    }
+  }
 }
 
 std::pair<int, int> GetThreadCount() {
