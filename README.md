@@ -10,6 +10,12 @@ First, ensure that you are using a machine meeting the following requirements:
 * Runs a 64-bit variant of the OS (check with arch).
 * Has GCC or Clang and GNU Make installed.
 
+## Make Targets
+Use `make` to build, test.
+* `all`: compiles and packages your library.
+* `test`: compiles all test cases.
+* `clean`: deletes temporary files.
+
 ## Usage
 A full program using this library might look like this:
 ```cpp
@@ -36,9 +42,3 @@ int main() {
   return 0;
 }
 ```
-
-## Make Targets
-Use `make` to build, test.
-* `all`: compiles and packages your library.
-* `test`: compiles all test cases.
-* `clean`: deletes temporary files.
